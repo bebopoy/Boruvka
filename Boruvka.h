@@ -64,7 +64,6 @@ public:
 
         // 创建一个并查集
         Subset *subsets = new Subset[V];
-        int *parent = new int[V];
 
         // 初始化并查集和最小边数组
         for (int v = 0; v < V; ++v)
@@ -72,7 +71,6 @@ public:
             subsets[v].parent = v;
             subsets[v].rank = 0;
             cheapest[v].weight = DEFAULT_INFINITY;
-            parent[v] = -1;
         }
 
         int numTrees = V;
@@ -112,7 +110,6 @@ public:
                     // 总权重值
                     MSTweight += cheapest[i].weight;
                     Union(subsets, set1, set2);
-                    parent[cheapest[i].src] = cheapest[i].dest;
                     numTrees--;
                 }
             }
@@ -120,11 +117,8 @@ public:
 
         // 输出最小生成树的权重和边
         cout << "Weight of MST is " << MSTweight << endl;
-        cout << "Edges of MST are:\n";
-        for (int i = 0; i < V; ++i)
-            cout << parent[i] << " - " << i << endl;
 
-        cout << "并查集情况 i parent rank " << endl;
+        cout << "并查集情况 \ni--parent--rank " << endl;
         for (int i = 0; i < V; i++)
         {
             cout << i << "\t" << subsets[i].parent << "\t" << subsets[i].rank << endl;
